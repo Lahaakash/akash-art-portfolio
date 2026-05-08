@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Alex Morrison — Fine Artist, London">
+<!-- ============================================================
+     ARTIST PORTFOLIO — EDIT GUIDE (for artist only)
+     ============================================================
+     All content you need to personalise is marked with:
+       <!-- EDIT: description -->
+     Search this file for "EDIT:" to find every editable spot.
+     DO NOT change anything else unless you know HTML/CSS.
+     ============================================================ -->
+<title><!-- EDIT: Your Name -->Alex Morrison<!-- /EDIT --> — Fine Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS  — DO NOT EDIT
+───────────────────────────────────────────── */
+:root {
+  --sienna:       #A0522D;
+  --sienna-deep:  #7A3B1E;
+  --sienna-light: #C8795A;
+  --terra:        #C26A45;
+  --terra-pale:   #E8C4A8;
+  --terra-faint:  #F5EDE5;
+  --navy:         #1C2B3A;
+  --navy-mid:     #2C3E52;
+  --indigo:       #2D3561;
+  --plum:         #3D2645;
+  --gold:         #C9A84C;
+  --gold-light:   #E8D5A0;
+  --cream:        #FAF6F0;
+  --parchment:    #F2EAE0;
+  --warm-white:   #FDFAF6;
+  --ink:          #1A1410;
+  --ink-mid:      #3A2E28;
+  --ink-light:    rgba(26,20,16,0.55);
+  --ink-ghost:    rgba(26,20,16,0.08);
+  --serif:        'Cormorant Garamond', 'Palatino Linotype', serif;
+  --sans:         'Jost', system-ui, sans-serif;
+  --mono:         'DM Mono', monospace;
+  --ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-silk:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-snap:    cubic-bezier(0.68, -0.3, 0.32, 1.3);
+  --r-sm: 3px;
+  --r-md: 6px;
+}
+
+/* ─────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--warm-white);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+}
+img { display: block; width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ─────────────────────────────────────────────
+   CUSTOM CURSOR
+───────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--sienna);
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s var(--ease-silk), opacity 0.3s, background 0.3s;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(160,82,45,0.5);
+  transform: translate(-50%,-50%);
+  transition: transform 0.35s var(--ease-premium), width 0.35s var(--ease-premium),
+              height 0.35s var(--ease-premium), border-color 0.35s, opacity 0.3s;
+}
+body.cursor-hover .cursor-ring { width: 56px; height: 56px; border-color: var(--sienna); }
+body.cursor-hover .cursor-dot  { background: var(--gold); transform: translate(-50%,-50%) scale(1.6); }
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease-premium), transform 0.9s var(--ease-premium);
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.45s; }
+
+/* ─────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3.5rem;
+  transition: background 0.5s var(--ease-silk), padding 0.4s var(--ease-silk),
+              box-shadow 0.5s var(--ease-silk);
+}
+nav.scrolled {
+  background: rgba(253,250,246,0.92);
+  backdrop-filter: blur(18px) saturate(1.4);
+  padding: 1rem 3.5rem;
+  box-shadow: 0 1px 0 rgba(26,20,16,0.08);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.3rem; font-weight: 400; letter-spacing: 0.05em;
+  color: var(--cream);
+  transition: color 0.4s var(--ease-silk);
+}
+nav.scrolled .nav-logo { color: var(--ink); }
+.nav-links { display: flex; gap: 2.8rem; list-style: none; }
+.nav-links a {
+  font-family: var(--mono); font-size: 0.68rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(250,246,240,0.65);
+  transition: color 0.3s, opacity 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 100%;
+  height: 1px; background: var(--sienna-light);
+  transition: right 0.35s var(--ease-premium);
+}
+.nav-links a:hover::after { right: 0; }
+nav.scrolled .nav-links a { color: var(--ink-light); }
+nav.scrolled .nav-links a:hover { color: var(--sienna); }
+.nav-links a:hover { color: rgba(250,246,240,1); opacity: 1; }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.nav-social-icon {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+  color: rgba(250,246,240,0.5);
+  transition: color 0.3s;
+}
+nav.scrolled .nav-social-icon { color: var(--ink-light); }
+.nav-social-icon:hover { color: var(--sienna-light) !important; }
+
+/* ─────────────────────────────────────────────
+   BUTTONS — PREMIUM
+───────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--mono); font-size: 0.7rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 0.85rem 2.2rem;
+  border: none; outline: none; cursor: none;
+  position: relative; overflow: hidden;
+  transition: color 0.4s var(--ease-silk), transform 0.3s var(--ease-snap),
+              box-shadow 0.4s var(--ease-silk);
+}
+.btn::before {
+  content: ''; position: absolute; inset: 0;
+  transform: translateX(-101%);
+  transition: transform 0.55s var(--ease-premium);
+}
+.btn:hover::before { transform: translateX(0); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.98); }
+
+.btn-sienna {
+  background: var(--sienna);
+  color: var(--cream);
+  box-shadow: 0 4px 24px rgba(160,82,45,0.3);
+}
+.btn-sienna::before { background: var(--sienna-deep); }
+.btn-sienna:hover { box-shadow: 0 8px 32px rgba(160,82,45,0.45); color: var(--cream); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1px rgba(250,246,240,0.45);
+}
+.btn-outline::before { background: rgba(250,246,240,0.1); }
+.btn-outline:hover { box-shadow: inset 0 0 0 1px rgba(250,246,240,0.9); color: var(--cream); }
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(26,20,16,0.3);
+}
+.btn-outline-dark::before { background: var(--parchment); }
+.btn-outline-dark:hover { box-shadow: inset 0 0 0 1px rgba(26,20,16,0.7); }
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 4px 24px rgba(201,168,76,0.25);
+}
+.btn-gold::before { background: #b8943e; }
+.btn-gold:hover { box-shadow: 0 8px 32px rgba(201,168,76,0.4); color: var(--ink); }
+
+/* Span inside btn so text stays above ::before */
+.btn span { position: relative; z-index: 1; }
+.btn svg  { position: relative; z-index: 1; }
+
+/* ─────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  position: relative; overflow: hidden;
+  display: flex; align-items: stretch;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(160,82,45,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 20% 80%, rgba(45,53,97,0.25) 0%, transparent 60%),
+    linear-gradient(160deg, #1A1410 0%, #2C1E16 35%, #1C2B3A 75%, #0E151F 100%);
+}
+.hero-grain {
+  position: absolute; inset: 0; opacity: 0.04; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.hero-line-v {
+  position: absolute; top: 0; bottom: 0; left: 55%;
+  width: 1px; background: rgba(250,246,240,0.06);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  width: 100%; padding-top: 88px;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 5rem 4rem 5rem 3.5rem;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2rem;
+}
+.hero-eyebrow-line { width: 40px; height: 1px; background: var(--sienna-light); }
+.hero-eyebrow span {
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--sienna-light);
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(4.5rem, 9vw, 8rem);
+  font-weight: 300; line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+}
+.hero-name em { font-style: italic; color: var(--terra); display: block; }
+.hero-tagline {
+  font-family: var(--serif); font-size: 1.2rem;
+  font-weight: 300; font-style: italic;
+  color: rgba(250,246,240,0.45);
+  margin-top: 1.75rem; max-width: 380px; line-height: 1.7;
+}
+.hero-cta { display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; }
+.hero-scroll-hint {
+  margin-top: 4rem;
+  display: flex; align-items: center; gap: 1rem;
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(250,246,240,0.25);
+}
+.scroll-arrow {
+  width: 24px; height: 24px; border: 1px solid rgba(250,246,240,0.15);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  animation: scrollBob 2.5s ease-in-out infinite;
+}
+@keyframes scrollBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+
+.hero-right {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 5rem 3rem;
+}
+.hero-artwork-frame {
+  position: relative; width: 100%; max-width: 380px;
+  aspect-ratio: 3/4;
+}
+.artwork-border {
+  position: absolute; inset: -12px;
+  border: 1px solid rgba(250,246,240,0.07);
+  pointer-events: none;
+}
+.artwork-border-inner {
+  position: absolute; inset: 0;
+  border: 1px solid rgba(250,246,240,0.04);
+  pointer-events: none;
+}
+.hero-artwork-img {
+  width: 100%; height: 100%; object-fit: cover;
+  /* EDIT: Replace with your actual featured artwork image src */
+  background: linear-gradient(145deg, #3d1a08 0%, #8b3a18 20%, #c46030 50%, #e8a060 70%, #a03818 85%, #2a1008 100%);
+  position: relative; overflow: hidden;
+}
+.artwork-shimmer {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
+  animation: shimmer 6s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
+.artwork-caption {
+  position: absolute; bottom: -2.5rem; left: 0;
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(250,246,240,0.25);
+}
+.hero-index {
+  position: absolute; right: 0; bottom: 3rem;
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; color: rgba(250,246,240,0.15);
+  writing-mode: vertical-rl;
+}
+
+/* ─────────────────────────────────────────────
+   SECTION BASE
+───────────────────────────────────────────── */
+.section-wrap { padding: 7rem 3.5rem; }
+.section-header {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-bottom: 5rem;
+}
+.section-num {
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.2em; color: var(--sienna-light);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 300; line-height: 1;
+  color: var(--ink);
+}
+.section-rule { flex: 1; height: 1px; background: var(--ink-ghost); }
+
+/* ─────────────────────────────────────────────
+   ABOUT
+───────────────────────────────────────────── */
+#about {
+  background: linear-gradient(165deg, #1A1410 0%, #23180F 40%, #1C2B3A 100%);
+  position: relative; overflow: hidden;
+}
+#about::before {
+  content: '';
+  position: absolute; top: -30%; right: -20%;
+  width: 60%; padding-top: 60%; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(160,82,45,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+#about .section-num  { color: var(--terra); }
+#about .section-title{ color: var(--cream); }
+#about .section-rule { background: rgba(250,246,240,0.08); }
+.about-grid {
+  display: grid; grid-template-columns: 0.8fr 1.4fr;
+  gap: 6rem; align-items: start;
+}
+.about-portrait {
+  position: relative;
+}
+.about-portrait-img {
+  width: 100%; aspect-ratio: 4/5;
+  /* EDIT: Replace gradient with your actual photo: background: url('your-photo.jpg') center/cover */
+  background: linear-gradient(170deg, #2a1810 0%, #5a2e18 40%, #3a2018 70%, #1a1008 100%);
+  position: relative; overflow: hidden;
+}
+.portrait-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,20,16,0.5) 0%, transparent 50%);
+}
+.portrait-decor {
+  position: absolute; top: -16px; right: -16px;
+  width: 70px; height: 70px;
+  border-top: 1px solid rgba(201,168,76,0.4);
+  border-right: 1px solid rgba(201,168,76,0.4);
+}
+.portrait-decor-bl {
+  position: absolute; bottom: -16px; left: -16px;
+  width: 70px; height: 70px;
+  border-bottom: 1px solid rgba(201,168,76,0.4);
+  border-left: 1px solid rgba(201,168,76,0.4);
+}
+.portrait-label {
+  position: absolute; bottom: 1.25rem; left: 1.25rem;
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(250,246,240,0.35);
+}
+.about-text-col h3 {
+  font-family: var(--serif); font-size: 1.7rem;
+  font-weight: 300; font-style: italic;
+  color: rgba(250,246,240,0.4); line-height: 1.5;
+  margin-bottom: 2rem;
+  border-left: 2px solid var(--sienna);
+  padding-left: 1.5rem;
+}
+.about-text-col p {
+  font-size: 0.92rem; line-height: 1.95;
+  color: rgba(250,246,240,0.6);
+  margin-bottom: 1.2rem;
+}
+.about-divider {
+  width: 40px; height: 1px;
+  background: var(--sienna); opacity: 0.5;
+  margin: 2rem 0;
+}
+.about-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: rgba(250,246,240,0.06);
+  margin-top: 3rem;
+}
+.stat {
+  background: rgba(250,246,240,0.03);
+  padding: 1.5rem 1.25rem;
+  transition: background 0.3s var(--ease-silk);
+}
+.stat:hover { background: rgba(250,246,240,0.06); }
+.stat-num {
+  font-family: var(--serif); font-size: 2.5rem;
+  font-weight: 300; color: var(--terra);
+  line-height: 1;
+}
+.stat-label {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(250,246,240,0.3); margin-top: 0.4rem;
+}
+
+/* ─────────────────────────────────────────────
+   WORKS
+───────────────────────────────────────────── */
+#works { background: var(--parchment); }
+.works-filter {
+  display: flex; gap: 0.4rem; margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.55rem 1.3rem;
+  border: 1px solid rgba(26,20,16,0.18);
+  background: transparent; color: rgba(26,20,16,0.5);
+  cursor: none;
+  transition: all 0.35s var(--ease-silk);
+  position: relative; overflow: hidden;
+}
+.filter-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--sienna); transform: scaleX(0);
+  transform-origin: left; transition: transform 0.4s var(--ease-premium);
+}
+.filter-btn:hover, .filter-btn.active {
+  color: var(--cream);
+  border-color: var(--sienna);
+}
+.filter-btn:hover::before, .filter-btn.active::before { transform: scaleX(1); }
+.filter-btn span { position: relative; z-index: 1; }
+
+.works-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.5px; background: rgba(26,20,16,0.1);
+}
+.work-card {
+  position: relative; overflow: hidden;
+  background: var(--parchment); cursor: none;
+}
+.work-img-wrap {
+  width: 100%; aspect-ratio: 3/4; overflow: hidden;
+}
+.work-img-wrap > div {
+  width: 100%; height: 100%;
+  transition: transform 0.8s var(--ease-premium);
+}
+.work-card:hover .work-img-wrap > div { transform: scale(1.06); }
+/* ── EDIT: Replace background gradients with actual artwork images ── */
+.wc-1 { background: linear-gradient(135deg,#3d1a08,#8b3c18,#c45c2a,#e89850,#c45020,#3d1a08); background-size:200% 200%; animation:wca 9s ease infinite; }
+.wc-2 { background: linear-gradient(155deg,#0e2030,#1a3a58,#2860a0,#5898c8,#1a3a58,#0a1825); background-size:200% 200%; animation:wca 11s ease infinite 1s; }
+.wc-3 { background: linear-gradient(115deg,#1a2210,#3a5020,#5a8030,#90b050,#3a6020,#1a2810); background-size:200% 200%; animation:wca 8s ease infinite 0.5s; }
+.wc-4 { background: linear-gradient(145deg,#2a0a1a,#601838,#a83858,#d07088,#882848,#2a0a1a); background-size:200% 200%; animation:wca 10s ease infinite 1.5s; }
+.wc-5 { background: linear-gradient(155deg,#201808,#504020,#907838,#c0a860,#785820,#201808); background-size:200% 200%; animation:wca 12s ease infinite 0.3s; }
+.wc-6 { background: linear-gradient(125deg,#0e1820,#1e3048,#305878,#5080a0,#1e3848,#0e1820); background-size:200% 200%; animation:wca 9s ease infinite 2s; }
+@keyframes wca { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+.work-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15,10,8,0.96) 0%, rgba(15,10,8,0.7) 40%, transparent 70%);
+  opacity: 0; transition: opacity 0.5s var(--ease-silk);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.75rem;
+}
+.work-card:hover .work-overlay { opacity: 1; }
+.work-title {
+  font-family: var(--serif); font-size: 1.5rem;
+  font-weight: 300; color: var(--cream);
+  transform: translateY(8px);
+  transition: transform 0.5s var(--ease-premium);
+}
+.work-card:hover .work-title { transform: translateY(0); }
+.work-meta {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(250,246,240,0.45); margin-top: 0.4rem;
+  transform: translateY(8px);
+  transition: transform 0.5s var(--ease-premium) 0.05s;
+}
+.work-card:hover .work-meta { transform: translateY(0); }
+.work-price {
+  font-family: var(--serif); font-size: 1.1rem;
+  color: var(--terra-pale); margin-top: 0.5rem;
+  transform: translateY(8px);
+  transition: transform 0.5s var(--ease-premium) 0.1s;
+}
+.work-card:hover .work-price { transform: translateY(0); }
+.work-buy-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.55rem 1.3rem;
+  background: transparent;
+  border: 1px solid rgba(250,246,240,0.35);
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--cream);
+  transition: background 0.35s var(--ease-silk), border-color 0.35s;
+  transform: translateY(8px);
+  transition: transform 0.5s var(--ease-premium) 0.15s, background 0.3s, border-color 0.3s;
+}
+.work-card:hover .work-buy-btn { transform: translateY(0); }
+.work-buy-btn:hover { background: rgba(250,246,240,0.12); border-color: rgba(250,246,240,0.7); }
+.work-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  padding: 0.3rem 0.85rem;
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  transition: opacity 0.4s;
+}
+.work-card:hover .work-badge { opacity: 0; }
+.badge-available { background: var(--sienna); color: var(--cream); }
+.badge-sold { background: rgba(15,10,8,0.75); color: rgba(250,246,240,0.5); border: 1px solid rgba(250,246,240,0.15); }
+.badge-new { background: var(--gold); color: var(--ink); }
+
+/* ─────────────────────────────────────────────
+   UPCOMING
+───────────────────────────────────────────── */
+#upcoming {
+  background: linear-gradient(175deg, #1C2030 0%, #1A1A2E 50%, #16213E 100%);
+  position: relative; overflow: hidden;
+}
+#upcoming::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(160,82,45,0.4), transparent);
+}
+#upcoming .section-num  { color: var(--gold); }
+#upcoming .section-title { color: var(--cream); }
+#upcoming .section-rule { background: rgba(250,246,240,0.07); }
+
+.upcoming-list {
+  display: flex; flex-direction: column;
+  gap: 1px; background: rgba(250,246,240,0.05);
+}
+.upcoming-item {
+  background: rgba(22,28,50,0.95);
+  display: grid;
+  grid-template-columns: 64px 1fr auto auto;
+  align-items: center; gap: 2.5rem;
+  padding: 2rem 2.5rem;
+  transition: background 0.4s var(--ease-silk);
+  position: relative; overflow: hidden;
+}
+.upcoming-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--sienna);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 0.45s var(--ease-premium);
+}
+.upcoming-item:hover { background: rgba(30,38,65,0.95); }
+.upcoming-item:hover::before { transform: scaleY(1); }
+.up-num {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.1em; color: var(--sienna-light); opacity: 0.7;
+}
+.up-info h4 {
+  font-family: var(--serif); font-size: 1.4rem;
+  font-weight: 400; color: var(--cream);
+  transition: color 0.3s;
+}
+.upcoming-item:hover .up-info h4 { color: var(--terra-pale); }
+.up-info p {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(250,246,240,0.35); margin-top: 0.25rem;
+}
+.up-date {
+  font-family: var(--mono); font-size: 0.68rem;
+  letter-spacing: 0.06em; color: rgba(250,246,240,0.4);
+  text-align: right; white-space: nowrap;
+}
+.up-status { text-align: right; }
+.status-pill {
+  display: inline-block; padding: 0.3rem 0.9rem;
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  border: 1px solid; white-space: nowrap;
+  transition: all 0.3s var(--ease-silk);
+}
+.pill-soon { border-color: var(--sienna-light); color: var(--sienna-light); }
+.pill-open { border-color: #5a9e6e; color: #5a9e6e; }
+.pill-waitlist { border-color: rgba(250,246,240,0.2); color: rgba(250,246,240,0.35); }
+.upcoming-item:hover .status-pill { background: rgba(250,246,240,0.05); }
+
+/* ─────────────────────────────────────────────
+   MARKETPLACE
+───────────────────────────────────────────── */
+#marketplace { background: var(--terra-faint); }
+.market-intro {
+  font-family: var(--serif); font-size: 1.25rem;
+  font-style: italic; color: rgba(26,20,16,0.5);
+  max-width: 520px; line-height: 1.8; margin-bottom: 4rem;
+}
+.market-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.5px; background: rgba(26,20,16,0.1);
+  margin-bottom: 3.5rem;
+}
+.market-card {
+  background: var(--terra-faint);
+  padding: 2.5rem 2rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  position: relative; overflow: hidden;
+  transition: background 0.4s var(--ease-silk);
+}
+.market-card::after {
+  content: ''; position: absolute; bottom: 0; left: 2rem; right: 2rem;
+  height: 1px; background: var(--sienna);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s var(--ease-premium);
+}
+.market-card:hover { background: #edddd0; }
+.market-card:hover::after { transform: scaleX(1); }
+.market-card-num {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.18em; color: var(--sienna-light);
+}
+.market-name {
+  font-family: var(--serif); font-size: 1.6rem;
+  font-weight: 400; color: var(--ink);
+}
+.market-desc {
+  font-size: 0.85rem; line-height: 1.75;
+  color: var(--ink-light);
+  flex: 1;
+}
+.market-link {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--sienna); margin-top: 0.5rem;
+  transition: gap 0.35s var(--ease-premium), color 0.3s;
+}
+.market-link:hover { gap: 1.1rem; color: var(--sienna-deep); }
+.market-link-arrow { font-size: 1rem; line-height: 1; }
+
+/* ─────────────────────────────────────────────
+   CONTACT STRIP
+───────────────────────────────────────────── */
+#contact-strip {
+  background: var(--sienna);
+  padding: 5rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 3rem; flex-wrap: wrap;
+}
+.contact-left h2 {
+  font-family: var(--serif); font-size: clamp(2rem,4vw,3rem);
+  font-weight: 300; color: var(--cream); line-height: 1.1;
+}
+.contact-left p {
+  font-size: 0.9rem; color: rgba(250,246,240,0.65);
+  margin-top: 0.75rem;
+}
+.contact-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+footer {
+  background: #0e0b08; color: var(--cream);
+  padding: 5rem 3.5rem 3rem;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 4rem; padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(250,246,240,0.06);
+  margin-bottom: 3rem;
+}
+.footer-brand h2 {
+  font-family: var(--serif); font-size: 1.8rem;
+  font-weight: 300; margin-bottom: 0.75rem;
+  color: var(--cream);
+}
+.footer-brand p {
+  font-size: 0.84rem; line-height: 1.8;
+  color: rgba(250,246,240,0.35); max-width: 260px;
+}
+.footer-social { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.75rem; }
+.social-link {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  font-family: var(--mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(250,246,240,0.4);
+  transition: color 0.3s var(--ease-silk), gap 0.3s var(--ease-premium);
+}
+.social-link:hover { color: var(--terra-pale); gap: 1.1rem; }
+.social-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sienna); flex-shrink: 0; }
+.footer-col h5 {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sienna-light); margin-bottom: 1.5rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-col ul li a {
+  font-size: 0.85rem; color: rgba(250,246,240,0.4);
+  transition: color 0.3s var(--ease-silk), padding-left 0.3s var(--ease-premium);
+  display: inline-block;
+}
+.footer-col ul li a:hover { color: var(--cream); padding-left: 6px; }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(250,246,240,0.18);
+}
+.footer-email a {
+  font-family: var(--serif); font-style: italic;
+  font-size: 0.95rem; color: rgba(250,246,240,0.3);
+  transition: color 0.3s;
+}
+.footer-email a:hover { color: var(--terra-pale); }
+
+/* ─────────────────────────────────────────────
+   PAGE LOADER
+───────────────────────────────────────────── */
+#loader {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #0e0b08;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s var(--ease-silk), visibility 0.8s;
+}
+#loader.done { opacity: 0; visibility: hidden; }
+.loader-inner { text-align: center; }
+.loader-name {
+  font-family: var(--serif); font-size: 1.8rem;
+  font-weight: 300; color: var(--cream);
+  opacity: 0; animation: loaderFadeIn 0.8s var(--ease-premium) 0.3s forwards;
+}
+.loader-bar-wrap {
+  width: 120px; height: 1px;
+  background: rgba(250,246,240,0.1);
+  margin: 1.5rem auto 0; overflow: hidden;
+}
+.loader-bar {
+  height: 100%; background: var(--sienna);
+  animation: loaderBar 1.6s var(--ease-premium) 0.5s forwards;
+  width: 0%;
+}
+@keyframes loaderFadeIn { to { opacity: 1; } }
+@keyframes loaderBar    { to { width: 100%; } }
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .works-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+@media (max-width: 860px) {
+  nav { padding: 1.1rem 1.75rem; }
+  nav.scrolled { padding: 0.9rem 1.75rem; }
+  .nav-links { display: none; }
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 4rem 1.75rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .section-wrap { padding: 5rem 1.75rem; }
+  .upcoming-item { grid-template-columns: 50px 1fr; gap: 1.5rem; }
+  .up-date, .up-status { display: none; }
+  .market-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .works-grid { grid-template-columns: 1fr; }
+  .hero-cta .btn { font-size: 0.62rem; padding: 0.75rem 1.5rem; }
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOADER ── -->
+<div id="loader">
+  <div class="loader-inner">
+    <!-- EDIT: Your name in loader -->
+    <div class="loader-name">Alex Morrison</div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  </div>
+</div>
+
+<!-- ── CURSORS ── -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ════════════════════════════════════════
+     NAV
+════════════════════════════════════════ -->
+<nav id="mainNav">
+  <!-- EDIT: Your name/brand -->
+  <a href="#hero" class="nav-logo">Alex Morrison</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#works">Works</a></li>
+    <li><a href="#upcoming">Upcoming</a></li>
+    <li><a href="#marketplace">Buy</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <!-- EDIT: Your social links (replace # with real URLs) -->
+    <a href="#" class="nav-social-icon">𝕏</a>
+    <a href="#" class="nav-social-icon">Ig</a>
+    <a href="#" class="nav-social-icon">in</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-line-v"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow reveal">
+        <div class="hero-eyebrow-line"></div>
+        <!-- EDIT: discipline · medium · city -->
+        <span>Fine Art &nbsp;·&nbsp; Mixed Media &nbsp;·&nbsp; London</span>
+      </div>
+      <!-- EDIT: Your first name on first line, last name in <em> -->
+      <h1 class="hero-name reveal reveal-delay-1">
+        Alex<br><em>Morrison</em>
+      </h1>
+      <!-- EDIT: Your personal tagline -->
+      <p class="hero-tagline reveal reveal-delay-2">
+        Exploring the tension between permanence and impermanence through oil, ink, and found material.
+      </p>
+      <div class="hero-cta reveal reveal-delay-3">
+        <a href="#works" class="btn btn-sienna"><span>View Works</span></a>
+        <a href="#marketplace" class="btn btn-outline"><span>Buy Prints</span></a>
+      </div>
+      <div class="hero-scroll-hint reveal reveal-delay-4">
+        <div class="scroll-arrow">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 1v8M2 6l3 3 3-3"/></svg>
+        </div>
+        Scroll to explore
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-artwork-frame reveal reveal-delay-2">
+        <div class="artwork-border"></div>
+        <div class="artwork-border-inner"></div>
+        <!--
+          EDIT: Replace the div below with an actual image tag:
+          <img src="your-featured-work.jpg" alt="Featured Artwork Title" style="width:100%;height:100%;object-fit:cover;">
+        -->
+        <div class="hero-artwork-img">
+          <div class="artwork-shimmer"></div>
+        </div>
+        <!-- EDIT: Featured artwork caption -->
+        <div class="artwork-caption">Featured — "Dissolution No. 7", 2024</div>
+      </div>
+      <!-- EDIT: Current piece number / total -->
+      <div class="hero-index">01 / 24</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-portrait">
+          <!--
+            EDIT: Replace with your actual photo:
+            <img src="your-portrait.jpg" alt="Your Name" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;">
+          -->
+          <div class="about-portrait-img">
+            <div class="portrait-overlay"></div>
+          </div>
+          <div class="portrait-decor"></div>
+          <div class="portrait-decor-bl"></div>
+          <!-- EDIT: Caption for portrait -->
+          <div class="portrait-label">Studio, East London — 2024</div>
+        </div>
+      </div>
+      <div class="about-text-col reveal reveal-delay-1">
+        <!-- EDIT: Your signature quote -->
+        <h3>"I paint to understand what I cannot say."</h3>
+        <!-- EDIT: Your bio paragraph 1 -->
+        <p>Alex Morrison is a London-based painter and mixed-media artist whose practice investigates the archaeology of memory — the way feeling accumulates in objects, textures, and forgotten gestures. Working primarily in oil and encaustic wax, with frequent incursions into printmaking and collage, Morrison's work occupies the space between abstraction and suggestion.</p>
+        <!-- EDIT: Your bio paragraph 2 -->
+        <p>Exhibited internationally across Europe and North America, with works held in private collections in London, New York, and Tokyo. Shortlisted for the Catlin Art Prize and a former resident of the Rele Arts Foundation, Lagos.</p>
+        <!-- EDIT: Your bio paragraph 3 -->
+        <p>Currently based in a studio in Hackney Wick, East London, working toward a new body of work examining industrial entropy and natural reclamation.</p>
+        <div class="about-divider"></div>
+        <div class="about-stats">
+          <!-- EDIT: Your real stats -->
+          <div class="stat">
+            <div class="stat-num">80+</div>
+            <div class="stat-label">Works Sold</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">14</div>
+            <div class="stat-label">Exhibitions</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">9</div>
+            <div class="stat-label">Years Active</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     WORKS
+════════════════════════════════════════ -->
+<section id="works">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Selected Works</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="works-filter reveal">
+      <!-- EDIT: Add/remove filter categories as needed -->
+      <button class="filter-btn active" data-filter="all"><span>All</span></button>
+      <button class="filter-btn" data-filter="oil"><span>Oil</span></button>
+      <button class="filter-btn" data-filter="print"><span>Print</span></button>
+      <button class="filter-btn" data-filter="mixed"><span>Mixed Media</span></button>
+      <button class="filter-btn" data-filter="study"><span>Study</span></button>
+    </div>
+    <div class="works-grid reveal reveal-delay-1">
+
+      <!-- ── WORK CARD 1 ── EDIT all fields below ── -->
+      <div class="work-card" data-category="oil">
+        <div class="work-img-wrap">
+          <!--
+            EDIT: Replace div with:
+            <img src="work-1.jpg" alt="Dissolution No. 7" class="wc-1" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <img src="images/art1.jpg"
+            alt="Shringara Sabha"
+            style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <span class="work-badge badge-available">Available</span>
+        <div class="work-overlay">
+          <div class="work-title">Dissolution No. 7</div>          <!-- EDIT: artwork title -->
+          <div class="work-meta">Oil on linen &nbsp;·&nbsp; 120 × 90 cm &nbsp;·&nbsp; 2024</div>  <!-- EDIT: medium, size, year -->
+          <div class="work-price">£4,200</div>                     <!-- EDIT: price or 'POA' -->
+          <!-- EDIT: link href to your marketplace listing -->
+          <a href="#marketplace" class="work-buy-btn">Enquire &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ── WORK CARD 2 ── -->
+      <div class="work-card" data-category="mixed">
+        <div class="work-img-wrap">
+          <!--
+            EDIT: Replace div with:
+            <img src="work-1.jpg" alt="Dissolution No. 7" class="wc-1" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <img src="images/art2.jpg"
+            alt="Shringara Sabha"
+            style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <span class="work-badge badge-sold">Sold</span>
+        <div class="work-overlay">
+          <div class="work-title">Threshold (Blue Study)</div>
+          <div class="work-meta">Encaustic wax &nbsp;·&nbsp; 60 × 80 cm &nbsp;·&nbsp; 2023</div>
+          <div class="work-price">Sold</div>
+          <a href="#marketplace" class="work-buy-btn">View on Artsy &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ── WORK CARD 3 ── -->
+      <div class="work-card" data-category="mixed">
+        <div class="work-img-wrap">
+          <!--
+            EDIT: Replace div with:
+            <img src="work-1.jpg" alt="Dissolution No. 7" class="wc-1" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <img src="images/art2.jpg"
+            alt="Shringara Sabha"
+            style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <span class="work-badge badge-available">Available</span>
+        <div class="work-overlay">
+          <div class="work-title">Overgrowth I</div>
+          <div class="work-meta">Mixed media &nbsp;·&nbsp; 100 × 75 cm &nbsp;·&nbsp; 2024</div>
+          <div class="work-price">£3,600</div>
+          <a href="#marketplace" class="work-buy-btn">Enquire &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ── WORK CARD 4 ── -->
+      <div class="work-card" data-category="oil">
+        <div class="work-img-wrap">
+          <!--
+            EDIT: Replace div with:
+            <img src="work-1.jpg" alt="Dissolution No. 7" class="wc-1" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <img src="images/art4.jpg"
+            alt="Shringara Sabha"
+            style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <span class="work-badge badge-new">New</span>
+        <div class="work-overlay">
+          <div class="work-title">Memory Tissue IV</div>
+          <div class="work-meta">Oil on board &nbsp;·&nbsp; 50 × 50 cm &nbsp;·&nbsp; 2024</div>
+          <div class="work-price">£2,800</div>
+          <a href="#marketplace" class="work-buy-btn">Buy Print — £180 &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ── WORK CARD 5 ── -->
+      <div class="work-card" data-category="print">
+        <div class="work-img-wrap">
+          <!--
+            EDIT: Replace div with:
+            <img src="work-1.jpg" alt="Dissolution No. 7" class="wc-1" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <img src="images/art5.jpg"
+            alt="Shringara Sabha"
+            style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <span class="work-badge badge-sold">Sold</span>
+        <div class="work-overlay">
+          <div class="work-title">Archive of Warmth</div>
+          <div class="work-meta">Oil &amp; collage &nbsp;·&nbsp; 90 × 120 cm &nbsp;·&nbsp; 2022</div>
+          <div class="work-price">Sold</div>
+          <a href="#marketplace" class="work-buy-btn">View Collection &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ── WORK CARD 6 ── -->
+      <div class="work-card" data-category="print">
+        <div class="work-img-wrap">
+          <!--
+            EDIT: Replace div with:
+            <img src="work-1.jpg" alt="Dissolution No. 7" class="wc-1" style="width:100%;height:100%;object-fit:cover;">
+          -->
+          <img src="images/art6.jpg"
+            alt="Shringara Sabha"
+            style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <span class="work-badge badge-available">Available</span>
+        <div class="work-overlay">
+          <div class="work-title">Remnant (Deep Horizon)</div>
+          <div class="work-meta">Etching &amp; aquatint &nbsp;·&nbsp; 40 × 60 cm &nbsp;·&nbsp; 2024</div>
+          <div class="work-price">£240</div>
+          <a href="#marketplace" class="work-buy-btn">Buy Print &rarr;</a>
+        </div>
+      </div>
+
+      <!-- EDIT: Duplicate any work-card block above to add more works -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     UPCOMING
+════════════════════════════════════════ -->
+<section id="upcoming">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Upcoming</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="upcoming-list reveal reveal-delay-1">
+
+      <!-- ── UPCOMING ITEM 1 ── EDIT all fields ── -->
+      <div class="upcoming-item">
+        <div class="up-num">001</div>
+        <div class="up-info">
+          <!-- EDIT: Event title, venue, description -->
+          <h4>Entropy &amp; Return — Solo Exhibition</h4>
+          <p>Victoria Miro, London &nbsp;·&nbsp; 12 original oils, new series</p>
+        </div>
+        <!-- EDIT: Date range -->
+        <div class="up-date">March 14 – April 12, 2025</div>
+        <!-- EDIT: Status — pill-soon / pill-open / pill-waitlist -->
+        <div class="up-status"><span class="status-pill pill-soon">Opening Soon</span></div>
+      </div>
+
+      <!-- ── UPCOMING ITEM 2 ── -->
+      <div class="upcoming-item">
+        <div class="up-num">002</div>
+        <div class="up-info">
+          <h4>Limited Print Drop — Dissolution Series</h4>
+          <p>Online &nbsp;·&nbsp; Signed editions of 30, new colorways</p>
+        </div>
+        <div class="up-date">February 1, 2025</div>
+        <div class="up-status"><span class="status-pill pill-open">Pre-order Open</span></div>
+      </div>
+
+      <!-- ── UPCOMING ITEM 3 ── -->
+      <div class="upcoming-item">
+        <div class="up-num">003</div>
+        <div class="up-info">
+          <h4>Group Show — Material Memory</h4>
+          <p>Tate Exchange, London &nbsp;·&nbsp; Curated by Hettie Judah</p>
+        </div>
+        <div class="up-date">May 3 – June 28, 2025</div>
+        <div class="up-status"><span class="status-pill pill-waitlist">Catalogue Waitlist</span></div>
+      </div>
+
+      <!-- ── UPCOMING ITEM 4 ── -->
+      <div class="upcoming-item">
+        <div class="up-num">004</div>
+        <div class="up-info">
+          <h4>Studio Open Day &amp; Talk</h4>
+          <p>Hackney Wick Studio &nbsp;·&nbsp; Work-in-progress + Q&amp;A</p>
+        </div>
+        <div class="up-date">April 26, 2025</div>
+        <div class="up-status"><span class="status-pill pill-open">RSVP Open</span></div>
+      </div>
+
+      <!-- EDIT: Copy an upcoming-item block to add more events -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MARKETPLACE / BUY
+════════════════════════════════════════ -->
+<section id="marketplace">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Collect</h2>
+      <div class="section-rule"></div>
+    </div>
+    <!-- EDIT: intro sentence -->
+    <p class="market-intro reveal">Original paintings, signed limited prints, and digital editions — available across platforms worldwide.</p>
+    <div class="market-grid reveal reveal-delay-1">
+
+      <!-- ── MARKETPLACE CARD 1 ── EDIT: platform name, description, link ── -->
+      <div class="market-card">
+        <div class="market-card-num">Platform 01</div>
+        <div class="market-name">Artsy</div>       <!-- EDIT: platform name -->
+        <div class="market-desc">Original oil paintings and unique works. Enquire directly through the platform with shipping and insurance included.</div>
+        <!-- EDIT: href to your actual Artsy/platform URL -->
+        <a href="#" class="market-link"><span>Visit store</span><span class="market-link-arrow">→</span></a>
+      </div>
+
+      <!-- ── MARKETPLACE CARD 2 ── -->
+      <div class="market-card">
+        <div class="market-card-num">Platform 02</div>
+        <div class="market-name">Print Shop</div>  <!-- EDIT: e.g. Saatchi Art, Etsy, your own store -->
+        <div class="market-desc">Signed limited edition prints, 30–50 cm. Archival giclée on Hahnemühle paper. Framed and unframed options available.</div>
+        <a href="#" class="market-link"><span>Shop prints</span><span class="market-link-arrow">→</span></a>
+      </div>
+
+      <!-- ── MARKETPLACE CARD 3 ── -->
+      <div class="market-card">
+        <div class="market-card-num">Platform 03</div>
+        <div class="market-name">Foundation</div>  <!-- EDIT: e.g. OpenSea, Foundation, SuperRare -->
+        <div class="market-desc">Digital editions and 1/1 collector pieces. Full provenance and certificate of authenticity included with every work.</div>
+        <a href="#" class="market-link"><span>Collect digital</span><span class="market-link-arrow">→</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CONTACT STRIP
+════════════════════════════════════════ -->
+<div id="contact-strip">
+  <div class="contact-left reveal">
+    <!-- EDIT: CTA heading and subtext -->
+    <h2>Let's work together.</h2>
+    <p>Commissions, gallery enquiries, press, and licensing — always welcome.</p>
+  </div>
+  <div class="contact-actions reveal reveal-delay-1">
+    <!-- EDIT: Replace mailto with your actual email -->
+    <a href="mailto:studio@alexmorrison.art" class="btn btn-outline"><span>Send a Message</span></a>
+    <!-- EDIT: Link to your press kit PDF or remove this button -->
+    <a href="#" class="btn btn-gold"><span>Press Kit</span></a>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <!-- EDIT: Your name and short description -->
+      <h2>Alex Morrison</h2>
+      <p>Fine artist based in East London. Accepting commissions and institutional project enquiries.</p>
+      <div class="footer-social">
+        <!-- EDIT: Replace # with your actual social URLs and update label text -->
+        <a href="#" class="social-link"><div class="social-dot"></div> Twitter / X</a>
+        <a href="#" class="social-link"><div class="social-dot"></div> Instagram</a>
+        <a href="#" class="social-link"><div class="social-dot"></div> LinkedIn</a>
+        <a href="#" class="social-link"><div class="social-dot"></div> Substack</a>
+        <!-- EDIT: Add or remove social links as needed -->
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#works">Selected Works</a></li>
+        <li><a href="#upcoming">Upcoming Shows</a></li>
+        <li><a href="#marketplace">Buy / Collect</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Connect</h5>
+      <ul>
+        <!-- EDIT: Real mailto and URLs -->
+        <li><a href="mailto:studio@alexmorrison.art">studio@alexmorrison.art</a></li>
+        <li><a href="#">Commission Enquiry</a></li>
+        <li><a href="#">Gallery Representation</a></li>
+        <li><a href="#">Press &amp; Media</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#">© All Rights Reserved</a></li>
+        <li><a href="#">Image Use Policy</a></li>
+        <li><a href="#">Privacy Notice</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <!-- EDIT: Your name and year -->
+    <div class="footer-copy">&copy; 2025 Alex Morrison &nbsp;·&nbsp; All artwork rights reserved &nbsp;·&nbsp; Unauthorised reproduction prohibited</div>
+    <!-- EDIT: Your contact email -->
+    <div class="footer-email"><a href="mailto:studio@alexmorrison.art">studio@alexmorrison.art</a></div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════
+     SCRIPTS  — DO NOT EDIT
+════════════════════════════════════════ -->
+<script>
+/* Loader */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+  }, 1800);
+});
+
+/* Custom cursor */
+const dot  = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  dot.style.left  = mx + 'px';
+  dot.style.top   = my + 'px';
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a, button, .work-card, .market-card, .upcoming-item').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* Sticky nav */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* Scroll reveal */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* Filter buttons */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.work-card').forEach(card => {
+      const show = filter === 'all' || card.dataset.category === filter;
+      card.style.transition = 'opacity 0.45s, transform 0.45s';
+      card.style.opacity    = show ? '1' : '0.2';
+      card.style.transform  = show ? 'scale(1)' : 'scale(0.97)';
+    });
+  });
+});
+</script>
+</body>
+</html>
